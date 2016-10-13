@@ -47,7 +47,11 @@
       </ul>
       <p class="navbar-text navbar-right">
         <% if current_user %>
-          <%= current_user.first_name || current_user.email %> |
+          <% if current_user.first_name.nil? || current_user.first_name == '' %>
+            <%= current_user.email %>
+          <% else %>
+            <%= current_user.first_name %>
+          <% end %> |
           <%= link_to 'Logout', logout_path %>
         <% else %>
           <%= link_to 'Login', login_path %> |
