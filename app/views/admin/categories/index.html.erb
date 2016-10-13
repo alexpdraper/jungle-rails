@@ -1,0 +1,35 @@
+<section class="admin-categories-index">
+
+  <header class="page-header">
+    <h1>Admin &raquo; All Categories</h1>
+  </header>
+
+  <div class="well">
+    <%#= link_to '+ New Category', [:new, :admin, :product], class: 'btn btn-info' %>
+    TODO: Link to new category
+  </div>
+
+  <div class="panel panel-default categories">
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>No. Products</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%# TODO: Separate into a partial %>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><h4><%= category.name %></h4></td>
+            <td><%= category.products.count %></td>
+          </tr>
+        <% end %>
+        <%#= render @categories %>
+      </tbody>
+    </table>
+
+  </div>
+
+</section>
