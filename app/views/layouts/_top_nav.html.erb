@@ -45,6 +45,15 @@
           <% end %>
         </li>
       </ul>
+      <p class="navbar-text navbar-right">
+        <% if current_user %>
+          <%= current_user.first_name || current_user.email %> |
+          <%= link_to 'Logout', logout_path %>
+        <% else %>
+          <%= link_to 'Login', login_path %> |
+          <%= link_to 'Sign Up', new_user_path %>
+        <% end %>
+      </p>
     </div>
   </div>
 </nav>
