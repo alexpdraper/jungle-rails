@@ -117,7 +117,7 @@ cat3.products.create!({
   name:  'Electric Chair',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('furniture2.jpg'),
-  quantity: 2,
+  quantity: 0,
   price: 987.65
 })
 
@@ -129,5 +129,56 @@ cat3.products.create!({
   price: 2_483.75
 })
 
+puts 'Creating Users ...'
+
+user1 = User.create!(
+  first_name: 'Dwigt',
+  last_name: 'Schrute',
+  email: 'dwight@dundermifflin.com',
+  password: 'secret',
+  password_confirmation: 'secret'
+)
+
+user2 = User.create!(
+  first_name: 'Alex',
+  last_name: 'Draper',
+  email: 'alexpdraper@gmail.com',
+  password: 'secret',
+  password_confirmation: 'secret'
+)
+
+user3 = User.create!(
+  first_name: 'Wolfgang',
+  last_name: 'Mozart',
+  email: 'mozart@pigeons.io',
+  password: 'secret',
+  password_confirmation: 'secret'
+)
+
+puts 'Creating Reviews ...'
+
+user1.reviews.create!(
+  product_id: Product.find_by(name: 'Red Bookshelf').id,
+  rating: rand(5).to_i + 1,
+  description: 'It is very red. A very red bookshelf.'
+)
+
+user1.reviews.create!(
+  product_id: Product.find_by(name: 'Electric Chair').id,
+  rating: rand(5).to_i + 1,
+  description: 'Not what I was expecting.'
+)
+
+user2.reviews.create!(
+  product_id: Product.find_by(name: 'Electric Chair').id,
+  rating: rand(5).to_i + 1,
+  description: 'A unique item. Hard to tell if it is art, or just furniture.'
+)
+
+user3.reviews.create!(
+  product_id: Product.find_by(name: 'Men\'s Classy shirt').id,
+  rating: 5,
+  description: 'Classy. Very classy. The shirt of the future.'
+)
 
 puts "DONE!"
