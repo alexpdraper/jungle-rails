@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  default_url_options :host => "localhost:3000"
+
   root to: 'products#index'
 
   resources :products, only: [:index, :show]

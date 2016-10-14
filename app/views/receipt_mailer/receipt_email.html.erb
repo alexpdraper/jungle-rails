@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Jungle Order #<%= @order.id %></h1>
+    <p>
+      You have successfully placed your Jungle order.
+    </p>
+    <p>
+      View the order at: <%= link_to @order_url, @order_url %>.
+    </p>
+    <p>Thanks for your order and have a great day!</p>
+  </body>
+</html>
