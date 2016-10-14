@@ -26,6 +26,25 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Reviews</h3>
+
+        <% @product.reviews.each do |review| %>
+          <div class="product-review">
+            <p>
+              <%= User.find(review.user_id).first_name %>
+              <%= review.rating %> / 5
+            </p>
+            <% unless review.description == '' || review.description.nil? %>
+              <p><%= review.description %></p>
+            <% end %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+
   </article>
 
 </section>
