@@ -29,19 +29,10 @@
     <div class="row">
       <div class="col-xs-12">
         <h3>Reviews</h3>
-
-        <% @product.reviews.each do |review| %>
-          <div class="product-review">
-            <p>
-              <%= User.find(review.user_id).first_name %>
-              <%= review.rating %> / 5
-            </p>
-            <% unless review.description == '' || review.description.nil? %>
-              <p><%= review.description %></p>
-            <% end %>
-          </div>
-        <% end %>
-
+        <% reviews = @product.reviews.order('created_at desc') %>
+        <p class="lead">Reviews: <%= reviews.count %></p>
+        <%= render 'new_review' %>
+        <%= render partial: 'review', collection: reviews %>
       </div>
     </div>
 
