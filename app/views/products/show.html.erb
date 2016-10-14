@@ -29,10 +29,17 @@
     <div class="row">
       <div class="col-xs-12">
         <h3>Reviews</h3>
+        <%= render 'new_review' if current_user %>
         <% reviews = @product.reviews.order('created_at desc') %>
-        <p class="lead">Reviews: <%= reviews.count %></p>
-        <%= render 'new_review' %>
-        <%= render partial: 'review', collection: reviews %>
+        <% if reviews.count == 0 %>
+          <p>This product has no reviews yet.</p>
+        <% else %>
+          <p class="lead">
+            <%= reviews.sum(:rating) / reviews.count %> stars<br>
+            based on <%= pluralize(reviews.count, 'rating') %>.
+          </p>
+          <%= render partial: 'review', collection: reviews %>
+        <% end %>
       </div>
     </div>
 
