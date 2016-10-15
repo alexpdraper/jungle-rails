@@ -26,24 +26,22 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-xs-12">
-        <h3>Reviews</h3>
-        <%= render 'new_review' if current_user %>
-        <% reviews = @product.reviews.order('created_at desc') %>
-        <% if reviews.count == 0 %>
-          <p>This product has no reviews yet.</p>
-        <% else %>
-          <p class="lead">
-            <% avg_rating = reviews.sum(:rating) / reviews.count %>
-            <%= pluralize avg_rating, 'star' %><br>
-            based on <%= pluralize(reviews.count, 'rating') %>.
-          </p>
-          <%= render partial: 'review', collection: reviews %>
-        <% end %>
-      </div>
-    </div>
-
   </article>
+
+  <div class="reviews">
+    <h3>Reviews</h3>
+    <%= render 'new_review' if current_user %>
+    <% reviews = @product.reviews.order('created_at desc') %>
+    <% if reviews.count == 0 %>
+      <p>This product has no reviews yet.</p>
+    <% else %>
+      <p class="lead">
+        <% avg_rating = reviews.sum(:rating) / reviews.count %>
+        <%= pluralize avg_rating, 'star' %><br>
+        based on <%= pluralize(reviews.count, 'rating') %>.
+      </p>
+      <%= render partial: 'review', collection: reviews %>
+    <% end %>
+  </div>
 
 </section>

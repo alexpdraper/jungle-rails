@@ -1,14 +1,14 @@
-  <div class="product-review">
-    <header>
-      <%= review.rating %> / 5<br>
-      <%= review.user.first_name %>
-    </header>
-    <% unless review.description == '' || review.description.nil? %>
-      <article>
-        <%= review.description %>
-      </article>
-    <% end %>
+<div class="product-review">
+  <header>
+    <%= review.rating %> / 5<br>
+    <%= review.user.first_name %>
     <% if review.user == current_user %>
       <%= link_to fa_icon('trash'), [@product, review], class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: "Are you sure?" } %>
     <% end %>
-  </div>
+  </header>
+  <% unless review.description == '' || review.description.nil? %>
+    <article>
+      <%= review.description %>
+    </article>
+  <% end %>
+</div>

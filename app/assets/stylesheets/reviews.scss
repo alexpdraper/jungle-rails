@@ -1,0 +1,18 @@
+.reviews {
+  border-top: 1px solid #ccc;
+  margin-bottom: 2em;
+
+  .new-review-container {
+    padding: 1em;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 2em;
+  }
+
+  .product-review {
+    header {
+      font-weight: 700;
+    }
+    margin-bottom: 2em;
+  }
+}
