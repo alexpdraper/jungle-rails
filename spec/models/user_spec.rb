@@ -33,7 +33,7 @@ RSpec.describe User, type: :model do
         jim.save
 
         expect(jim).to_not be_valid
-        expect(jim.errors.count).to eq(1)
+        expect(jim.errors.size).to eq 1
         expect(jim.errors.full_messages.include?('First name can\'t be blank')).to be true
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe User, type: :model do
         jim.save
 
         expect(jim).to_not be_valid
-        expect(jim.errors.count).to eq(1)
+        expect(jim.errors.size).to eq 1
         expect(jim.errors.full_messages.include?('Last name can\'t be blank')).to be true
       end
     end
@@ -55,7 +55,7 @@ RSpec.describe User, type: :model do
         jim.save
 
         expect(jim).to_not be_valid
-        expect(jim.errors.count).to eq(1)
+        expect(jim.errors.size).to eq 1
         expect(jim.errors.full_messages.include?('Email can\'t be blank')).to be true
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe User, type: :model do
         jim.save
 
         expect(jim).to_not be_valid
-        expect(jim.errors.count).to eq(1)
+        expect(jim.errors.size).to eq 1
         expect(jim.errors.full_messages.include?('Password confirmation doesn\'t match Password')).to be true
       end
     end
@@ -79,10 +79,10 @@ RSpec.describe User, type: :model do
         jim.save
 
         expect(jim).to_not be_valid
-        expect(jim.errors.count).to eq(1)
-        puts jim.errors.full_messages
+        expect(jim.errors.size).to eq 1
+
         err_message_re = /^Password is too short/
-        expect(jim.errors.full_messages.grep(err_message_re).count).to eq 1
+        expect(jim.errors.full_messages.grep(err_message_re).size).to eq 1
       end
     end
 
@@ -99,6 +99,44 @@ RSpec.describe User, type: :model do
         nancy.save
 
         expect(nancy).to_not be_persisted
+      end
+    end
+
+  end
+
+  describe '.authenticate_with_credentials' do
+
+    let(:jim) do
+      User.new(first_name: 'Jim',
+      last_name: 'Jimmy',
+      email: 'jim@example.com',
+      password: 'secret',
+      password_confirmation: 'secret')
+    end
+
+    context 'when the email and password are valid' do
+      it 'should return a user' do
+        jim.save!
+
+        expect(jim).to eq User.authenticate_with_credentials(jim.email, jim.password)
+      end
+    end
+
+    context 'when the email doesn\'t match the case' do
+      it 'should return a user' do
+        jim.save!
+
+        expect(jim).to eq User.authenticate_with_credentials(jim.email.downcase, jim.password)
+        expect(jim).to eq User.authenticate_with_credentials(jim.email.upcase, jim.password)
+      end
+    end
+
+    context 'when the email has leading or trailing white space' do
+      it 'should return a user' do
+        jim.save!
+
+        expect(User.authenticate_with_credentials("  #{jim.email}", jim.password)).to eq jim
+        expect(User.authenticate_with_credentials(" #{jim.email}   \n  ", jim.password)).to eq jim
       end
     end
 

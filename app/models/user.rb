@@ -7,4 +7,11 @@ class User < ActiveRecord::Base
   has_many :reviews
   has_secure_password
 
+  def self.authenticate_with_credentials(email, password)
+    formatted_email = email.downcase.strip
+    user = User.where('lower(email) = ?', formatted_email).first
+    user = nil unless user && user.authenticate(password)
+    user
+  end
+
 end
