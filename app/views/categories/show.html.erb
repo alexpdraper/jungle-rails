@@ -7,6 +7,9 @@
     </h1>
   </header>
 
+  <% if flash.notice %>
+    <p><%= flash.notice %></p>
+  <% end %>
   <div class="products">
     <%= render @products %>
   </div>
