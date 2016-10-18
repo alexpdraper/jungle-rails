@@ -91,13 +91,13 @@ RSpec.describe User, type: :model do
         jim.email = 'test@example.com'
         nancy.email = 'test@example.com'
         jim.save!
-        nancy.save
 
+        expect { nancy.save! }.to raise_error ActiveRecord::RecordInvalid
         expect(nancy).to_not be_persisted
 
         nancy.email = 'TEST@example.com'
-        nancy.save
 
+        expect { nancy.save! }.to raise_error ActiveRecord::RecordInvalid
         expect(nancy).to_not be_persisted
       end
     end
@@ -118,25 +118,25 @@ RSpec.describe User, type: :model do
       it 'should return a user' do
         jim.save!
 
-        expect(jim).to eq User.authenticate_with_credentials(jim.email, jim.password)
-      end
-    end
-
-    context 'when the email doesn\'t match the case' do
-      it 'should return a user' do
-        jim.save!
-
-        expect(jim).to eq User.authenticate_with_credentials(jim.email.downcase, jim.password)
-        expect(jim).to eq User.authenticate_with_credentials(jim.email.upcase, jim.password)
-      end
-    end
-
-    context 'when the email has leading or trailing white space' do
-      it 'should return a user' do
-        jim.save!
-
+        expect(User.authenticate_with_credentials(jim.email, jim.password)).to eq jim
+        expect(User.authenticate_with_credentials(jim.email.downcase, jim.password)).to eq jim
+        expect(User.authenticate_with_credentials(jim.email.upcase, jim.password)).to eq jim
         expect(User.authenticate_with_credentials("  #{jim.email}", jim.password)).to eq jim
         expect(User.authenticate_with_credentials(" #{jim.email}   \n  ", jim.password)).to eq jim
+      end
+    end
+
+    context 'when the password is invalid' do
+      it 'should return nil' do
+        jim.save!
+
+        expect(User.authenticate_with_credentials(jim.email, "wrong#{jim.password}")).to eq nil
+      end
+    end
+
+    context 'when the email is not in the database' do
+      it 'should return nil' do
+        expect(User.authenticate_with_credentials(jim.email, jim.password)).to eq nil
       end
     end
 
